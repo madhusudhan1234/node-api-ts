@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner, Table } from "typeorm";
 import { AUTHORS } from "../../constants/DBTable";
 
-export class CreateAuthorsTable1675484639606 implements MigrationInterface {
+export class CreateAuthorsTable1677677710032 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
@@ -40,13 +40,13 @@ export class CreateAuthorsTable1675484639606 implements MigrationInterface {
           },
           {
             name: "createdAt",
-            type: "datetime",
+            type: "timestamp",
             default: "now()",
             isNullable: true,
           },
           {
             name: "updatedAt",
-            type: "datetime",
+            type: "timestamp",
             default: "now()",
             isNullable: true,
           },

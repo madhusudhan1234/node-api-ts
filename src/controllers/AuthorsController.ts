@@ -1,15 +1,14 @@
 import { Request, Response } from "express";
+import { ResponseUtil } from "../../utils/Response";
 import { AppDataSource } from "../database/data-source";
+import { Paginator } from "../database/paginator";
 import { Author } from "../entities/Author";
 
 export class AuthorsController {
   async getAuthors(req: Request, res: Response) {
-    const authors = await AppDataSource.getRepository(Author).find();
-    return res.status(200).json({
-      success: true,
-      message: "Fetched authors successfully",
-      data: authors,
-    });
+    const builder = await AppDataSource.getRepository(Author).createQueryBuilder().orderBy("id", "DESC");
+    const { records: authors, paginationInfo } = await Paginator.paginate(builder, req);
+    return ResponseUtil.sendResponse(res, "Fetched authors successfully", authors, paginationInfo);
   }
 
   async getAuthor(req: Request, res: Response) {
@@ -17,10 +16,7 @@ export class AuthorsController {
     const author = await AppDataSource.getRepository(Author).findOneByOrFail({
       id: Number(id),
     });
-    return res.status(200).json({
-      success: true,
-      message: "Fetched author successfully",
-      data: author,
-    });
+
+    return ResponseUtil.sendResponse<Author>(res, "Fetched author successfully", author);
   }
 }
