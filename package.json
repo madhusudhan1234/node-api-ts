@@ -7,11 +7,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "dev": "nodemon --watch src --exec 'ts-node' src/index.ts",
-    "typeorm": "typeorm-ts-node-common-js -d src/database/data-source.ts",
-    "migration:show": "npm run typeorm migration:show",
+    "typeorm": "typeorm-ts-node-commonjs -d src/database/data-source.ts",
+    "migration:show": "yarn typeorm migration:show",
     "migration:create": "node scripts/migration-create.js",
-    "migration:run": "npm run typeorm migration:run",
-    "migration:revert": "npm run typeorm migration:revert"
+    "migration:run": "yarn typeorm migration:run",
+    "migration:revert": "yarn typeorm migration:revert"
   },
   "author": "",
   "license": "ISC",
