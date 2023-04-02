@@ -1,20 +1,20 @@
 import express from "express";
-import { ErrorHandler } from "../../utils/ErrorHandler";
-import { AuthorsController } from "../controllers/AuthorsController";
-import { FileUploader } from "../middlewares/FileUploader";
+import { AuthorsController } from "../http/controllers/AuthorsController";
+import { ErrorHandler } from "../http/middlewares/ErrorHandler";
+import { FileUploader } from "../http/middlewares/FileUploader";
 
 const router = express.Router();
 
 const authorsController = new AuthorsController();
 
-router.get("/", ErrorHandler.handleErrors(authorsController.getAuthors));
-router.get("/:id", ErrorHandler.handleErrors(authorsController.getAuthor));
+router.get("/", ErrorHandler.catchErrors(authorsController.getAuthors));
+router.get("/:id", ErrorHandler.catchErrors(authorsController.getAuthor));
 router.post(
   "/",
   FileUploader.upload("image", "authors", 2 * 1024 * 1024),
-  ErrorHandler.handleErrors(authorsController.create)
+  ErrorHandler.catchErrors(authorsController.create)
 );
-router.put("/:id", ErrorHandler.handleErrors(authorsController.update));
-router.delete("/:id", ErrorHandler.handleErrors(authorsController.delete));
+router.put("/:id", ErrorHandler.catchErrors(authorsController.update));
+router.delete("/:id", ErrorHandler.catchErrors(authorsController.delete));
 
 export default router;
