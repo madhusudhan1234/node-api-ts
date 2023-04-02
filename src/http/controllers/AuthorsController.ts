@@ -1,10 +1,10 @@
 import { validate } from "class-validator";
 import { Request, Response } from "express";
-import { ResponseUtil } from "../../utils/Response";
-import { AppDataSource } from "../database/data-source";
-import { Paginator } from "../database/paginator";
+import { ResponseUtil } from "../../../utils/Response";
+import { Paginator } from "../../database/Paginator";
+import { AppDataSource } from "../../database/data-source";
+import { Author } from "../../database/entities/Author";
 import { CreateAuthorDTO, UpdateAuthorDTO } from "../dtos/CreateAuthorDTO";
-import { Author } from "../entities/Author";
 
 export class AuthorsController {
   async getAuthors(req: Request, res: Response) {
@@ -48,6 +48,7 @@ export class AuthorsController {
 
     const dto = new UpdateAuthorDTO();
     Object.assign(dto, authorData);
+    dto.id = parseInt(id);
 
     const errors = await validate(dto);
     if (errors.length > 0) {
