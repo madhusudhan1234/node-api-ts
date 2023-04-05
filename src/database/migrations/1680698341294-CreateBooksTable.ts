@@ -1,11 +1,11 @@
-import { MigrationInterface, QueryRunner, Table } from "typeorm";
+import { MigrationInterface, QueryRunner, Table, TableForeignKey } from "typeorm";
 import { DBTable } from "../../constants/DBTable";
 
-export class CreateAuthorsTable1677677710032 implements MigrationInterface {
+export class CreateBooksTable1680698341294 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: DBTable.AUTHORS,
+        name: DBTable.BOOKS,
         columns: [
           {
             name: "id",
@@ -15,28 +15,31 @@ export class CreateAuthorsTable1677677710032 implements MigrationInterface {
             generationStrategy: "increment",
           },
           {
-            name: "name",
+            name: "title",
             type: "varchar",
             length: "255",
             isNullable: false,
           },
           {
-            name: "email",
-            type: "varchar",
-            length: "255",
-            isNullable: false,
-            isUnique: true,
-          },
-          {
-            name: "bio",
+            name: "description",
             type: "text",
-            isNullable: true,
+            isNullable: false,
           },
           {
-            name: "image",
+            name: "authorId",
+            type: "int",
+            isNullable: false,
+          },
+          {
+            name: "price",
+            type: "int",
+            isNullable: false,
+          },
+          {
+            name: "category",
             type: "varchar",
             length: "255",
-            isNullable: true,
+            isNullable: false,
           },
           {
             name: "createdAt",
@@ -54,9 +57,19 @@ export class CreateAuthorsTable1677677710032 implements MigrationInterface {
       }),
       true
     );
+
+    await queryRunner.createForeignKey(
+      DBTable.BOOKS,
+      new TableForeignKey({
+        columnNames: ["authorId"],
+        referencedColumnNames: ["id"],
+        referencedTableName: DBTable.AUTHORS,
+        onDelete: "CASCADE",
+      })
+    );
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable(DBTable.AUTHORS);
+    await queryRunner.dropTable(DBTable.BOOKS);
   }
 }
