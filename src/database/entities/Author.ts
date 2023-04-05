@@ -1,7 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
-import { AUTHORS } from "../../constants/DBTable";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { DBTable } from "../../constants/DBTable";
+import { Book } from "./Book";
 
-@Entity(AUTHORS)
+@Entity(DBTable.AUTHORS)
 export class Author {
   @PrimaryGeneratedColumn()
   id: number;
@@ -17,4 +18,7 @@ export class Author {
 
   @Column({ nullable: true })
   image: string;
+
+  @OneToMany((type) => Book, (book) => book.author)
+  books: Book[];
 }
