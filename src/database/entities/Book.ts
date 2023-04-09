@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 import { DBTable } from "../../constants/DBTable";
 import { Author } from "./Author";
 
@@ -17,9 +17,6 @@ export class Book {
   author: Author;
 
   @Column()
-  authorId: number;
-
-  @Column()
   price: number;
 
   @Column()
@@ -27,4 +24,10 @@ export class Book {
 
   @Column({ nullable: true })
   image: string;
+
+  @CreateDateColumn()
+  createdAt: Date;
+
+  @UpdateDateColumn()
+  updatedAt: Date;
 }
