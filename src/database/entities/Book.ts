@@ -17,9 +17,6 @@ export class Book {
   author: Author;
 
   @Column()
-  authorId: number;
-
-  @Column()
   price: number;
 
   @Column()
