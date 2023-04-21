@@ -42,6 +42,12 @@ export class CreateBooksTable1680698341294 implements MigrationInterface {
             isNullable: false,
           },
           {
+            name: "image",
+            type: "varchar",
+            length: "255",
+            isNullable: true,
+          },
+          {
             name: "createdAt",
             type: "timestamp",
             default: "now()",
@@ -58,15 +64,14 @@ export class CreateBooksTable1680698341294 implements MigrationInterface {
       true
     );
 
-    await queryRunner.createForeignKey(
-      DBTable.BOOKS,
-      new TableForeignKey({
-        columnNames: ["authorid"],
-        referencedColumnNames: ["id"],
-        referencedTableName: DBTable.AUTHORS,
-        onDelete: "CASCADE",
-      })
-    );
+    const foreignKey = new TableForeignKey({
+      columnNames: ["authorid"],
+      referencedColumnNames: ["id"],
+      referencedTableName: DBTable.AUTHORS,
+      onDelete: "CASCADE",
+    });
+
+    await queryRunner.createForeignKey(DBTable.BOOKS, foreignKey);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
