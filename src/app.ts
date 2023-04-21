@@ -4,6 +4,7 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { ErrorHandler } from "./http/middlewares/ErrorHandler";
 import authorsRoute from "./routes/authors";
+import booksRoute from "./routes/books";
 
 const app: Express = express();
 
@@ -12,6 +13,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/authors", authorsRoute);
+app.use("/books", booksRoute);
 app.use("*", (req: Request, res: Response) => {
   return res.status(404).json({
     success: false,

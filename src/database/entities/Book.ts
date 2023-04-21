@@ -1,4 +1,12 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from "typeorm";
 import { DBTable } from "../../constants/DBTable";
 import { Author } from "./Author";
 
@@ -14,7 +22,11 @@ export class Book {
   description: string;
 
   @ManyToOne((type) => Author, (author) => author.books, { eager: true })
+  @JoinColumn({ name: "authorid" })
   author: Author;
+
+  @Column({})
+  authorid: number;
 
   @Column()
   price: number;
