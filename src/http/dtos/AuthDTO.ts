@@ -20,3 +20,14 @@ export class RegisterDTO {
 
   confirmPassword: string;
 }
+
+export class LoginDTO {
+  @IsNotEmpty()
+  @IsEmail()
+  email: string;
+
+  @IsNotEmpty()
+  @MinLength(5)
+  @MaxLength(20)
+  password: string;
+}
