@@ -30,4 +30,16 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  toResponse(): Partial<User> {
+    const responseUser = new User();
+    responseUser.id = this.id;
+    responseUser.name = this.name;
+    responseUser.email = this.email;
+    responseUser.role = this.role;
+    responseUser.createdAt = this.createdAt;
+    responseUser.updatedAt = this.updatedAt;
+
+    return responseUser;
+  }
 }
