@@ -8,9 +8,15 @@ import { CreateBookDTO, UpdateBookDTO } from "../dtos/BookDTO";
 
 export class BooksController {
   async get(req: Request, res: Response) {
-    const builder = await AppDataSource.getRepository(Book).createQueryBuilder().orderBy("id", "DESC");
+    const builder = await AppDataSource.getRepository(Book)
+      .createQueryBuilder("book")
+      .leftJoinAndSelect("book.author", "author")
+      .orderBy("book.id", "DESC");
     const { records: books, paginationInfo } = await Paginator.paginate(builder, req);
-    return ResponseUtil.sendResponse(res, "Fetched books successfully", books, paginationInfo);
+    const bookData = books.map((book: Book) => {
+      return book.toPayload();
+    });
+    return ResponseUtil.sendResponse(res, "Fetched books successfully", bookData, paginationInfo);
   }
 
   async getBook(req: Request, res: Response): Promise<Response> {
@@ -19,7 +25,7 @@ export class BooksController {
       id: Number(id),
     });
 
-    return ResponseUtil.sendResponse<Book>(res, "Fetched book successfully", book, null);
+    return ResponseUtil.sendResponse<Partial<Book>>(res, "Fetched book successfully", book.toPayload(), null);
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -65,7 +71,7 @@ export class BooksController {
     repo.merge(book, bookData);
     await repo.save(book);
 
-    return ResponseUtil.sendResponse(res, "Successfully updated the book", book, null);
+    return ResponseUtil.sendResponse(res, "Successfully updated the book", book.toPayload(), null);
   }
 
   async delete(req: Request, res: Response): Promise<Response> {
