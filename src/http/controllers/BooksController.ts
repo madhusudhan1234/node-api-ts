@@ -1,10 +1,10 @@
+import { Paginator } from "@/database/Paginator";
+import { AppDataSource } from "@/database/data-source";
+import { Book } from "@/database/entities/Book";
+import { CreateBookDTO, UpdateBookDTO } from "@/http/dtos/BookDTO";
+import { ResponseUtil } from "@/utils/Response";
 import { validate } from "class-validator";
 import { Request, Response } from "express";
-import { ResponseUtil } from "../../../utils/Response";
-import { Paginator } from "../../database/Paginator";
-import { AppDataSource } from "../../database/data-source";
-import { Book } from "../../database/entities/Book";
-import { CreateBookDTO, UpdateBookDTO } from "../dtos/BookDTO";
 
 export class BooksController {
   async get(req: Request, res: Response) {

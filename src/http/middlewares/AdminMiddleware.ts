@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { ResponseUtil } from "../../../utils/Response";
 import { Roles } from "../../constants/Role";
+import { ResponseUtil } from "../../utils/Response";
 
 export class AdminMiddleware {
   static async check(req: Request, res: Response, next: NextFunction) {

@@ -1,6 +1,6 @@
+import { DBTable } from "@/constants/DBTable";
+import { ImageUtil } from "@/utils/ImageUtil";
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
-import { ImageUtil } from "../../../utils/ImageUtil";
-import { DBTable } from "../../constants/DBTable";
 import { Book } from "./Book";
 
 @Entity(DBTable.AUTHORS)

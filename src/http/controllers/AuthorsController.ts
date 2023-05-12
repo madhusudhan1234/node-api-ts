@@ -1,10 +1,10 @@
+import { Paginator } from "@/database/Paginator";
+import { AppDataSource } from "@/database/data-source";
+import { Author } from "@/database/entities/Author";
+import { ResponseUtil } from "@/utils/Response";
+import { CreateAuthorDTO, UpdateAuthorDTO } from "@http/dtos/CreateAuthorDTO";
 import { validate } from "class-validator";
 import { Request, Response } from "express";
-import { ResponseUtil } from "../../../utils/Response";
-import { Paginator } from "../../database/Paginator";
-import { AppDataSource } from "../../database/data-source";
-import { Author } from "../../database/entities/Author";
-import { CreateAuthorDTO, UpdateAuthorDTO } from "../dtos/CreateAuthorDTO";
 
 export class AuthorsController {
   async getAuthors(req: Request, res: Response) {
