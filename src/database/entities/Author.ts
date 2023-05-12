@@ -1,4 +1,5 @@
 import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { ImageUtil } from "../../../utils/ImageUtil";
 import { DBTable } from "../../constants/DBTable";
 import { Book } from "./Book";
 
@@ -27,4 +28,16 @@ export class Author {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  toPayload(): Author {
+    return {
+      id: this.id,
+      name: this.name,
+      email: this.email,
+      bio: this.bio,
+      image: ImageUtil.prepareUrl("authors", this.image),
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    } as Author;
+  }
 }

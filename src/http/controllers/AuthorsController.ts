@@ -10,7 +10,10 @@ export class AuthorsController {
   async getAuthors(req: Request, res: Response) {
     const builder = await AppDataSource.getRepository(Author).createQueryBuilder().orderBy("id", "DESC");
     const { records: authors, paginationInfo } = await Paginator.paginate(builder, req);
-    return ResponseUtil.sendResponse(res, "Fetched authors successfully", authors, paginationInfo);
+    const authorData = authors.map((author: Author) => {
+      return author.toPayload();
+    });
+    return ResponseUtil.sendResponse(res, "Fetched authors successfully", authorData, paginationInfo);
   }
 
   async getAuthor(req: Request, res: Response): Promise<Response> {
@@ -19,7 +22,7 @@ export class AuthorsController {
       id: Number(id),
     });
 
-    return ResponseUtil.sendResponse<Author>(res, "Fetched author successfully", author);
+    return ResponseUtil.sendResponse<Author>(res, "Fetched author successfully", author.toPayload());
   }
 
   async create(req: Request, res: Response): Promise<Response> {
@@ -63,7 +66,7 @@ export class AuthorsController {
     repo.merge(author, authorData);
     await repo.save(author);
 
-    return ResponseUtil.sendResponse(res, "Successfully updated the author", author);
+    return ResponseUtil.sendResponse(res, "Successfully updated the author", author.toPayload());
   }
 
   async delete(req: Request, res: Response): Promise<Response> {

@@ -7,6 +7,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
+import { ImageUtil } from "../../../utils/ImageUtil";
 import { DBTable } from "../../constants/DBTable";
 import { Author } from "./Author";
 
@@ -42,4 +43,18 @@ export class Book {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  toPayload(): Partial<Book> {
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      image: ImageUtil.prepareUrl("books", this.image),
+      author: this.author.toPayload(),
+      price: this.price / 100,
+      category: this.category,
+      createdAt: this.createdAt,
+      updatedAt: this.updatedAt,
+    };
+  }
 }
