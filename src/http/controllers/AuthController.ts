@@ -1,11 +1,11 @@
+import { AppDataSource } from "@/database/data-source";
+import { User } from "@/database/entities/User";
+import { LoginDTO, RegisterDTO } from "@/http/dtos/AuthDTO";
+import { ResponseUtil } from "@/utils/Response";
 import { compare } from "bcryptjs";
 import { validateOrReject } from "class-validator";
 import { NextFunction, Request, Response } from "express";
 import { sign } from "jsonwebtoken";
-import { ResponseUtil } from "../../../utils/Response";
-import { AppDataSource } from "../../database/data-source";
-import { User } from "../../database/entities/User";
-import { LoginDTO, RegisterDTO } from "../dtos/AuthDTO";
 
 export class AuthController {
   async register(req: Request, res: Response, next: NextFunction): Promise<Response> {

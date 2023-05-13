@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { ResponseUtil } from "../../../utils/Response";
 import { AppDataSource } from "../../database/data-source";
 import { User } from "../../database/entities/User";
+import { ResponseUtil } from "../../utils/Response";
 
 export class AuthMiddleware {
   static async authenticate(req: Request, res: Response, next: NextFunction) {

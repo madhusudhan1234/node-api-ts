@@ -7,8 +7,8 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { ImageUtil } from "../../../utils/ImageUtil";
 import { DBTable } from "../../constants/DBTable";
+import { ImageUtil } from "../../utils/ImageUtil";
 import { Author } from "./Author";
 
 @Entity(DBTable.BOOKS)

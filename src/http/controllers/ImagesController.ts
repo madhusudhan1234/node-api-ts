@@ -1,7 +1,7 @@
+import { ResponseUtil } from "@/utils/Response";
 import { NextFunction, Request, Response } from "express";
 import fs from "fs";
 import path from "path";
-import { ResponseUtil } from "../../../utils/Response";
 
 export class ImagesController {
   async get(req: Request, res: Response, next: NextFunction) {
