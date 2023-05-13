@@ -1,0 +1,39 @@
+version: '3.7'
+
+networks:
+  bookie:
+
+services:
+  postgres: 
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: bookie
+      POSTGRES_DB: bookie
+    volumes:
+      - ./docker/postgres:/var/lib/postgresql/data
+    networks:
+      - bookie
+    ports: 
+      - "5432:5432"
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./:/app
+    environment:
+      NODE_ENV: development
+      DB_HOST: postgres
+      DB_USERNAME: bookie
+      DB_PASSWORD: root
+      DB_DATABASE: bookie
+      DB_PORT: 5432
+    depends_on:
+      - postgres
+    command: yarn dev
+    ports: 
+      - "3000:3000"
+    networks:
+      - bookie
